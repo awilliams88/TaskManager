@@ -4,7 +4,7 @@ struct Task: Identifiable {
     let id = UUID()
     let title: String
     let description: String
-    let isCompleted: Bool
+    var isCompleted: Bool
 }
 
 let tasks = [
@@ -36,22 +36,28 @@ let tasks = [
 ]
 
 struct ContentView: View {
+    @State private var taskList = tasks
+    
     var body: some View {
         NavigationView {
-            List(tasks) { task in
-                NavigationLink(destination: TaskDetailView(task: task)) {
-                    VStack(alignment: .leading, spacing: 6) {
-                        HStack {
-                            Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                                .foregroundColor(task.isCompleted ? .green : .gray)
-                            Text(task.title)
-                                .font(.headline)
+            List {
+                ForEach($taskList) { $task in
+                    NavigationLink(destination: TaskDetailView(task: task)) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            HStack {
+                                Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                                    .foregroundColor(task.isCompleted ? .green : .gray)
+                                Text(task.title)
+                                    .font(.headline)
+                            }
+                            Text(task.description)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                            Toggle("Completed", isOn: $task.isCompleted)
+                                .toggleStyle(SwitchToggleStyle())
                         }
-                        Text(task.description)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                        .padding(.vertical, 4)
                     }
-                    .padding(.vertical, 4)
                 }
             }
             .navigationTitle("Task Manager")
