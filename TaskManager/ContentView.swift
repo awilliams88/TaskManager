@@ -39,18 +39,20 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(tasks) { task in
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
-                            .foregroundColor(task.isCompleted ? .green : .gray)
-                        Text(task.title)
-                            .font(.headline)
+                NavigationLink(destination: TaskDetailView(task: task)) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack {
+                            Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(task.isCompleted ? .green : .gray)
+                            Text(task.title)
+                                .font(.headline)
+                        }
+                        Text(task.description)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
-                    Text(task.description)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                    .padding(.vertical, 4)
                 }
-                .padding(.vertical, 4)
             }
             .navigationTitle("Task Manager")
         }
@@ -60,3 +62,4 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
