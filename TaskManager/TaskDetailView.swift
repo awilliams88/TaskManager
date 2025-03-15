@@ -10,7 +10,7 @@ struct TaskDetailView: View {
                     .font(.largeTitle)
                     .bold()
                 
-                Text(task.description)
+                Text(task.taskDescription)
                     .font(.body)
                 
                 Spacer()
@@ -22,5 +22,5 @@ struct TaskDetailView: View {
 }
 
 #Preview {
-    TaskDetailView(task: Task(title: "Sample Task", description: "This is a sample task description.", isCompleted: false))
+    TaskDetailView(task: Task(title: "Sample Task", taskDescription: "This is a sample task description."))
 }
